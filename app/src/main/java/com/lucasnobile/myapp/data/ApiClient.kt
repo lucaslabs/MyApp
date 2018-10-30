@@ -1,8 +1,8 @@
 package com.lucasnobile.myapp.data
 
-import com.lucasnobile.myapp.data.model.Laptop
-import retrofit2.http.GET
+import com.lucasnobile.myapp.data.model.LaptopListResponse
 import retrofit2.Call
+import retrofit2.http.GET
 
 /**
  * API Client to perform requests to API.
@@ -16,5 +16,5 @@ interface ApiClient {
     }
 
     @GET("list")
-    fun getLaptopList(): Call<Laptop>
+    fun getLaptopList(): Call<LaptopListResponse>
 }
