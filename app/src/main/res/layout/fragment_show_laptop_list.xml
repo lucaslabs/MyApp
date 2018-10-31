@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <!-- TODO Add Swipe to refresh feature -->
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -10,20 +11,9 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/txtTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        tools:text="Laptop list:" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvLaptop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/txtTitle"
         android:layout_margin="5dp" />
-
 </RelativeLayout>
