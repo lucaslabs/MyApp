@@ -1,4 +1,4 @@
-package com.lucasnobile.myapp.presentation.view
+package com.lucasnobile.myapp.presentation.feature.showLaptopList.view
 
 import android.content.Context
 import android.os.Bundle
@@ -7,13 +7,13 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.kotlin4android.ext.hide
-import com.kotlin4android.ext.show
-import com.kotlin4android.ext.showToast
 import com.lucasnobile.myapp.R
-import com.lucasnobile.myapp.data.model.Laptop
-import com.lucasnobile.myapp.domain.interactor.LoadLaptopListInteractor
-import com.lucasnobile.myapp.presentation.view.adapter.LaptopAdapter
+import com.lucasnobile.myapp.presentation.ext.hide
+import com.lucasnobile.myapp.presentation.ext.show
+import com.lucasnobile.myapp.presentation.ext.showToast
+import com.lucasnobile.myapp.presentation.feature.showLaptopList.presenter.ShowLaptopListPresenter
+import com.lucasnobile.myapp.presentation.feature.showLaptopList.view.adapter.LaptopAdapter
+import com.lucasnobile.myapp.presentation.model.LaptopUI
 import kotlinx.android.synthetic.main.fragment_show_laptop_list.*
 
 
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_show_laptop_list.*
  *
  * @author lucas.nobile
  */
-class ShowLaptopListFragment : Fragment(), LoadLaptopListInteractor.ResponseListener {
+class ShowLaptopListFragment : Fragment(), ShowLaptopListView {
 
     companion object {
         /**
@@ -34,19 +34,20 @@ class ShowLaptopListFragment : Fragment(), LoadLaptopListInteractor.ResponseList
         fun newInstance() = ShowLaptopListFragment()
     }
 
+    private lateinit var presenter: ShowLaptopListPresenter
+    private var listener: OnLaptopUISelectedListener? = null
     private lateinit var laptopAdapter: LaptopAdapter
-    private var listener: OnLaptopSelectedListener? = null
 
-    interface OnLaptopSelectedListener {
-        fun onLaptopSelected(laptop: Laptop)
+    interface OnLaptopUISelectedListener {
+        fun onLaptopUISelected(laptopUI: LaptopUI)
     }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if (context is OnLaptopSelectedListener) {
+        if (context is OnLaptopUISelectedListener) {
             listener = context
         } else {
-            throw ClassCastException("${context.toString()} must implement OnLaptopSelectedListener")
+            throw ClassCastException("${context.toString()} must implement OnLaptopUISelectedListener")
         }
     }
 
@@ -64,30 +65,36 @@ class ShowLaptopListFragment : Fragment(), LoadLaptopListInteractor.ResponseList
 
         rvLaptop.layoutManager = LinearLayoutManager(activity)
 
-        val laptopList = emptyList<Laptop>().toMutableList()
+        val laptopList = emptyList<LaptopUI>().toMutableList()
         laptopAdapter = LaptopAdapter(laptopList, listener)
 
         rvLaptop.adapter = laptopAdapter
 
-        loadLaptopList()
+        presenter = ShowLaptopListPresenter(this)
     }
 
-    private fun loadLaptopList() {
+    override fun onResume() {
+        super.onResume()
+        presenter.loadLaptopList()
+    }
+
+    override fun showLaptopUIList(laptopUIList: List<LaptopUI>) {
+        laptopAdapter.addLaptopUIList(laptopUIList)
+    }
+
+    override fun showLoadingIndicator() {
         progressBar.show()
-        LoadLaptopListInteractor(this).execute()
     }
 
-    override fun onResponse(laptopList: List<Laptop>) {
+    override fun hideLoadingIndicator() {
         progressBar.hide()
-        if (laptopList.isEmpty()) {
-            activity?.showToast(getString(R.string.alertNoLaptopListFound))
-        } else {
-            laptopAdapter.addLaptopList(laptopList)
-        }
     }
 
-    override fun onError(t: Throwable?) {
-        progressBar.hide()
+    override fun showErrorMessageForEmptyList() {
+        activity?.showToast(getString(R.string.alertNoLaptopListFound))
+    }
+
+    override fun showErrorMessageForLoadingLaptopList() {
         activity?.showToast(getString(R.string.alertErrorLoadingLaptopList))
     }
 }

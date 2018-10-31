@@ -1,4 +1,4 @@
-package com.kotlin4android.ext
+package com.lucasnobile.myapp.presentation.ext
 
 import android.view.View
 import android.widget.ProgressBar

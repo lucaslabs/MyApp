@@ -1,4 +1,4 @@
-package com.kotlin4android.ext
+package com.lucasnobile.myapp.presentation.ext
 
 import android.support.annotation.StringRes
 import android.support.v4.app.FragmentActivity

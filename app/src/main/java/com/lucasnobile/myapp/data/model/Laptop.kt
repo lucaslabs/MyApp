@@ -3,7 +3,7 @@ package com.lucasnobile.myapp.data.model
 import com.google.gson.annotations.SerializedName
 
 /**
- * Laptop model class.
+ * LaptopUI model class.
  *
  * @author lucas.nobile
  */
