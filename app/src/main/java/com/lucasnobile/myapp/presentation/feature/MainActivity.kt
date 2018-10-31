@@ -14,6 +14,11 @@ import com.lucasnobile.myapp.presentation.model.LaptopUI
  */
 class MainActivity : AppCompatActivity(), ShowLaptopListFragment.OnLaptopUISelectedListener {
 
+    // TODO Add Swipe-to-refresh feature
+    // TODO Add Caching Strategy using Repository pattern
+    // TODO Add Dependency Injection pattern
+    // TODO Add unit tests
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

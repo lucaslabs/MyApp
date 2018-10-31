@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- TODO Add Swipe to refresh feature -->
-
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
