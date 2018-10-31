@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.lucasnobile.myapp.R
+import com.lucasnobile.myapp.domain.interactor.LoadLaptopListInteractor
 import com.lucasnobile.myapp.presentation.ext.hide
 import com.lucasnobile.myapp.presentation.ext.show
 import com.lucasnobile.myapp.presentation.ext.showToast
@@ -70,7 +71,8 @@ class ShowLaptopListFragment : Fragment(), ShowLaptopListView {
 
         rvLaptop.adapter = laptopAdapter
 
-        presenter = ShowLaptopListPresenter(this)
+        val interactor = LoadLaptopListInteractor()
+        presenter = ShowLaptopListPresenter(this, interactor)
     }
 
     override fun onResume() {

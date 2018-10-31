@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity(), ShowLaptopListFragment.OnLaptopUISelec
     // TODO Add Swipe-to-refresh feature
     // TODO Add Caching Strategy using Repository pattern
     // TODO Add Dependency Injection pattern
-    // TODO Add unit tests
+    // TODO Add more unit tests
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

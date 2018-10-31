@@ -5,12 +5,10 @@ import com.lucasnobile.myapp.domain.interactor.LoadLaptopListInteractor
 import com.lucasnobile.myapp.presentation.feature.showLaptopList.view.ShowLaptopListView
 import com.lucasnobile.myapp.presentation.model.LaptopUI
 
-class ShowLaptopListPresenter(private val view: ShowLaptopListView) : LoadLaptopListInteractor.ResponseListener {
-
-    private var interactor: LoadLaptopListInteractor
+class ShowLaptopListPresenter(private val view: ShowLaptopListView, private var interactor: LoadLaptopListInteractor) : LoadLaptopListInteractor.ResponseListener {
 
     init {
-        interactor = LoadLaptopListInteractor(this)
+        interactor.setListener(this)
     }
 
     fun loadLaptopList() {

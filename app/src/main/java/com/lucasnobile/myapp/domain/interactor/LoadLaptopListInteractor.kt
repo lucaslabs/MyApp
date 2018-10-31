@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  *
  * @author lucas.nobile
  */
-class LoadLaptopListInteractor(private val listener: ResponseListener) : Callback<List<Laptop>> {
+class LoadLaptopListInteractor : Callback<List<Laptop>> {
 
     interface ResponseListener {
         fun onResponse(laptopList: List<Laptop>)
@@ -23,7 +23,7 @@ class LoadLaptopListInteractor(private val listener: ResponseListener) : Callbac
         fun onError(t: Throwable?)
     }
 
-
+    private lateinit var listener: ResponseListener
     private val loggingInterceptor: HttpLoggingInterceptor
     private val okClient: OkHttpClient
     private val apiClient: ApiClient
@@ -44,7 +44,12 @@ class LoadLaptopListInteractor(private val listener: ResponseListener) : Callbac
                 .create(ApiClient::class.java)
     }
 
-    fun execute() = apiClient.getLaptopList().enqueue(this)
+    fun setListener(listener: ResponseListener) {
+        this.listener = listener
+    }
+    fun execute() {
+        apiClient.getLaptopList().enqueue(this)
+    }
 
     override fun onResponse(call: Call<List<Laptop>>?, response: Response<List<Laptop>>) {
         try {
